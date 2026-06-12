@@ -1,8 +1,8 @@
 #  Delivery Checklist — Day 12 Lab Submission
 
-> **Student Name:** _________________________  
-> **Student ID:** _________________________  
-> **Date:** _________________________
+> **Student Name:** _Nguyễn hồng Phúc________________________<br>
+> **Student ID:** ______2A202600843___________________<br>
+> **Date:** ___________12062026______________
 
 ---
 
@@ -144,15 +144,23 @@ curl -X POST https://your-agent.railway.app/ask \
 ##  Pre-Submission Checklist
 
 - [ ] Repository is public (or instructor has access)
-- [ ] `MISSION_ANSWERS.md` completed with all exercises
+- [x] `MISSION_ANSWERS.md` completed with all exercises
 - [ ] `DEPLOYMENT.md` has working public URL
-- [ ] All source code in `app/` directory
-- [ ] `README.md` has clear setup instructions
-- [ ] No `.env` file committed (only `.env.example`)
-- [ ] No hardcoded secrets in code
+- [x] All source code in `06-lab-complete/app/` directory
+- [x] `README.md` has clear setup instructions
+- [x] No `.env` file committed (only `.env.example`)
+- [x] No hardcoded secrets in code
 - [ ] Public URL is accessible and working
 - [ ] Screenshots included in `screenshots/` folder
 - [ ] Repository has clear commit history
+
+Local verification completed:
+
+- [x] `python check_production_ready.py` passes 20/20 checks
+- [x] Final Docker image builds successfully
+- [x] Final Docker image is under 500 MB (247 MB)
+- [x] `docker compose up -d --build --scale agent=3` runs with 3 healthy agents, Redis, and Nginx
+- [x] Local smoke tests pass: health 200, ready 200, auth 401, ask 200, rate limit 429
 
 ---
 

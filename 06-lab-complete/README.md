@@ -68,3 +68,11 @@ python check_production_ready.py
 ```
 
 The checker verifies required files, security basics, endpoints, Docker hardening, health checks, and structured logging.
+
+## Verified Results
+
+- `python check_production_ready.py`: 20/20 checks passed.
+- `docker build -t day12-lab-complete:latest .`: passed.
+- Final Docker image size: 247 MB, below the 500 MB requirement.
+- `docker compose up -d --build --scale agent=3`: passed with 3 healthy agent containers, healthy Redis, and Nginx on port 80.
+- Nginx smoke tests passed: `/health` 200, `/ready` 200, missing auth 401, authenticated `/ask` 200, and rate limit 429 after 10 requests/minute.

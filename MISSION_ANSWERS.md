@@ -54,9 +54,10 @@
 
 ### Exercise 2.3: Image size comparison
 
-- Develop: not measured in this environment because Docker build did not complete before the tool timeout.
-- Production: not measured in this environment because Docker build did not complete before the tool timeout.
-- Expected difference: production should be smaller because it uses `python:3.11-slim`, multi-stage copy, and excludes build tools.
+- Develop: 1.66 GB (`day12-agent:develop`).
+- Production: 236 MB (`day12-agent:production`).
+- Difference: production is about 85.8% smaller than develop.
+- Final project image: 247 MB (`06-lab-complete-agent:latest`), under the 500 MB requirement.
 
 ### Exercise 2.4: Docker Compose stack
 
@@ -64,14 +65,13 @@ The production compose stack starts:
 
 - `agent`: FastAPI application.
 - `redis`: shared storage/cache for session, rate limiting, or other state.
-- `qdrant`: vector database for RAG examples.
 - `nginx`: reverse proxy and load balancer in front of the agent service.
 
 Communication flow:
 
-`Client -> Nginx -> Agent -> Redis/Qdrant`
+`Client -> Nginx -> Agent -> Redis`
 
-Nginx is the only public entrypoint. Agent instances stay internal and talk to Redis/Qdrant on the Docker network.
+Nginx is the only public entrypoint. Agent instances stay internal and talk to Redis on the Docker network.
 
 ### Checkpoint 2
 
@@ -293,7 +293,9 @@ curl -H "X-API-Key: secret" http://localhost/history/user1
 
 ### Production readiness notes
 
+- `docker build -t day12-lab-complete:latest .` passed; final image size is 247 MB.
+- `docker compose up -d --build --scale agent=3` passed after fixing the runtime `PYTHONPATH`.
+- Compose status showed 3 healthy `agent` containers, 1 healthy `redis`, and `nginx` exposed on port 80.
 - `docker compose config` was checked successfully.
 - `python check_production_ready.py` passed 20/20 checks.
-- FastAPI smoke test passed: `/health` 200, `/ready` 200, missing auth 401, authenticated `/ask` 200, history 200, rate limit 429 on request 11.
-- Full Docker build/run could not be completed because `docker build`/`docker compose build` timed out in this environment.
+- FastAPI smoke test through Nginx passed: `/health` 200, `/ready` 200 with Redis connected, missing auth 401, authenticated `/ask` 200, and rate limit 429 on request 11.

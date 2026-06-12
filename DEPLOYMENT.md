@@ -101,15 +101,20 @@ Expected: requests eventually return `429` after 10 requests per minute.
 ## Local Verification Completed
 
 - `python check_production_ready.py`: passed 20/20.
-- FastAPI smoke test:
+- `docker build -t day12-lab-complete:latest .`: passed.
+- Final Docker image size: 247 MB (`day12-lab-complete:latest` and `06-lab-complete-agent:latest`).
+- `docker compose up -d --build --scale agent=3`: passed.
+- Compose status:
+  - 3 healthy `agent` containers
+  - 1 healthy `redis` container
+  - 1 `nginx` container exposed on `localhost:80`
+- FastAPI smoke test through Nginx:
   - `/health`: 200
-  - `/ready`: 200
+  - `/ready`: 200 with Redis connected
   - `/ask` without `X-API-Key`: 401
   - `/ask` with `X-API-Key`: 200
-  - `/history/{user_id}`: 200
   - rate limiting: 429 on request 11
 - `docker compose config`: valid.
-- Docker build/run: attempted, but build commands timed out in this environment.
 
 ## Cloud Test Commands
 
