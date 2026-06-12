@@ -27,7 +27,6 @@ COPY --from=builder /root/.local /home/agent/.local
 
 # Copy application
 COPY app/ ./app/
-COPY utils/ ./utils/
 
 RUN chown -R agent:agent /app
 
@@ -46,4 +45,4 @@ HEALTHCHECK --interval=30s --timeout=10s --start-period=15s --retries=3 \
     "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')" \
     || exit 1
 
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--workers", "2"]
+CMD ["sh", "-c", "uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8000} --workers ${WEB_CONCURRENCY:-1}"]

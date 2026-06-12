@@ -61,7 +61,7 @@ Sau khi hoàn thành lab này, bạn sẽ:
 ###  Exercise 1.1: Phát hiện anti-patterns
 
 ```bash
-cd 01-localhost-vs-production/develop
+    cd 01-localhost-vs-production/develop
 ```
 
 **Nhiệm vụ:** Đọc `app.py` và tìm ít nhất 5 vấn đề.
